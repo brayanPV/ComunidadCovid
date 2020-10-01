@@ -30,4 +30,11 @@ public class UfpsController {
         return "datospersonales";
     }
 
+    @GetMapping(value="/login")
+    public String login(Model model){
+        model.addAttribute("titulo", "Iniciar sesion");
+        model.addAttribute("universidad", "ufps");
+        return "login";
+    }
+
 }

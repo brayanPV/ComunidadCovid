@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http//thymeleaf.org">
+
+<head th:replace="layout/layout :: head">
+</head>
+
+<body>
+    <div class="container py-4">
+        <div class="card border-primary text-center">
+            <div class="card-header" th:text="${titulo}"></div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a th:href="@{'/ufps/login'}" th:text="'login ufps'" class="btn btn-primary btn-xs">
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="layout/layout :: footer"></footer>
+</body>
+
+</html>

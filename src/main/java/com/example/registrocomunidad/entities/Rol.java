@@ -28,7 +28,7 @@ public class Rol implements Serializable{
 
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="rol_id")
+    @JoinColumn(name="rol")
     private List<Usuario> usuarios;
 
     public Long getId() {

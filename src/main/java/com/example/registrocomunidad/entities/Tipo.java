@@ -1,7 +1,9 @@
 package com.example.registrocomunidad.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -9,11 +11,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="usuario")
-public class Usuario implements Serializable{
+@Table(name="tipo")
+public class Tipo implements Serializable{
 
     /**
      *
@@ -24,17 +27,16 @@ public class Usuario implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String usuario;
-
-    private String email;
-
-    private String clave;
+    private String descripcion;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="empresa")
     private Empresa empresa;
 
-    
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="tipo")
+    private List<Basico> basicos;
+
     public Long getId() {
         return id;
     }
@@ -43,36 +45,12 @@ public class Usuario implements Serializable{
         this.id = id;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getClave() {
-        return clave;
-    }
-
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
-
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     

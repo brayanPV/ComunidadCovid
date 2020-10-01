@@ -35,6 +35,9 @@ public class Empresa implements Serializable{
     @OneToMany(mappedBy = "empresa",fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private List<Usuario> usuarios;
 
+    @OneToMany(mappedBy = "empresa",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Tipo> tipos;
+
     public Long getId() {
         return id;
     }
