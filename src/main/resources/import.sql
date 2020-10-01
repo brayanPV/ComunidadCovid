@@ -1,5 +1,5 @@
 INSERT INTO empresa (id, nombre, endpoint, estado, code) VALUES (1, 'Universidad Francisco de Paula Santander', 'http://siaweb.ufps.edu.co/prueba.php', 1, 'ufps');
-INSERT INTO empresa (id, nombre, endpoint, estado, code) VALUES (2, 'Universidad Simon Bolivar', 'http://siaweb.ufps.edu.co/prueba.php', 1, 'unisimon');
+INSERT INTO empresa (id, nombre, endpoint, estado, code) VALUES (2, 'Universidad Simon Bolivar', 'http://siaweb.ufps.edu.co/unisimon.php', 1, 'unisimon');
 
 INSERT INTO tipo (id, descripcion, empresa) VALUES (1, 'Docente', 1);
 INSERT INTO tipo (id, descripcion, empresa) VALUES(2, 'Estudiante', 1);

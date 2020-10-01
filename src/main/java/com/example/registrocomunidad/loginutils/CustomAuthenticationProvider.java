@@ -42,19 +42,27 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Autowired(required = false)
     private HttpServletRequest request;
 
+    private String url;
+    private String documento;
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String dominio = request.getParameter("dominio");
-        System.out.println("EL DOMINIO ES " + dominio);
+        String endpoint = request.getParameter("endpoint");
+        System.out.println("request testing= " + endpoint);
         String name = authentication.getName();
-        String url;
+        System.out.println("EL NOMBRE ES: " + name);
+         
         String password = authentication.getCredentials().toString();
-        if (dominio != null) {
-            if (dominio == "ufps") {
+        System.out.println("LA CONTRASEÑA ES: " + password);
+        if (endpoint != null) {
+            if (endpoint.equalsIgnoreCase("ufps")) {
+                System.out.println("AQUI ES UFPS");
                 url = "http://siaweb.ufps.edu.co/prueba.php";
+                
             } else {
                 url = "http://siaweb.ufps.edu.co/unisimon.php";
             }
+            System.out.println("DOMINIO: " + url);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
@@ -74,12 +82,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                 JSONObject obj = new JSONObject(response.getBody());
                 List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
                 if (obj.optString("documento") != null) {
-                    String documento = obj.optString("documento");
+                    documento = obj.optString("documento");
                     String nombre = obj.optString("nombre");
                     Long tipo = obj.optLong("tipo");
                     Tipo t = tipoDao.findById(tipo);
                     Basico b = basicoDao.findByDocumento(documento);
-                    if(b!=null){
+                    if(b==null){
+                        b= new Basico();
                         b.setDocumento(documento);
                         b.setNombre(nombre);
                         b.setTipo(t);
@@ -87,7 +96,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                     }
                 }
 
-                return new UsernamePasswordAuthenticationToken(name, password, authorities);
+                return new UsernamePasswordAuthenticationToken(documento, password, authorities);
 
             } catch (JSONException e) {
                
@@ -103,4 +112,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    
 }

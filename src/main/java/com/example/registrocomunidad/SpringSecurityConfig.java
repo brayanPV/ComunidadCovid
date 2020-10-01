@@ -2,6 +2,8 @@ package com.example.registrocomunidad;
 
 import com.example.registrocomunidad.loginutils.CustomAuthenticationProvider;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -21,13 +23,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
         auth.authenticationProvider(customAuthenticationProvider);
     }
 
+    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.authorizeRequests().antMatchers("/index", "/").permitAll()
+        
+        http.authorizeRequests().antMatchers("/home", "/").permitAll()
         .and()
         .formLogin()
             .loginPage("/login")
+            .defaultSuccessUrl("/datospersonales", true)
             .permitAll()
         .and()
         .logout().permitAll();

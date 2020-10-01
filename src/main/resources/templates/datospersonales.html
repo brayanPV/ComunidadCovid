@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http//thymeleaf.org">
+
+<head th:replace="layout/layout :: head">
+</head>
+
+<body>
+    <div class="container py-4">
+        <div class="card border-primary text-center">
+            <div class="card-header" th:text="${titulo}"></div>
+            <div class="card-body">
+
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Documento</th>
+                            <th>Telefono</th>
+                            <th>Tipo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td th:text="${basico.nombre}"></td>
+                            <td th:text="${basico.documento}"></td>
+                            <td th:text="${basico.telefono}"></td>
+                            <td th:text="${basico.tipo.descripcion}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="layout/layout :: footer"></footer>
+</body>
+
+</html>
