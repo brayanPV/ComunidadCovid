@@ -7,19 +7,30 @@
 <body>
     <header th:replace="layout/layout :: header"></header>
     <div class="container py-4">
+        <div>
+            <form id="logoutForm" th:action="@{/logout}" method="post">
+                <button class="btn btn-primary my-2" onclick="document.getElementById('logoutForm').submit();" type="submit"> Cerrar Sesion</button>
+            </form>
+        </div>
         <div class="card border-primary text-center">
             <div class="card-header" th:text="${titulo}"></div>
             <div class="card-body">
+
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <a th:href="@{'/ufps/login'}" th:text="'login ufps'" class="btn btn-primary btn-xs">
-                        </a>
+                        <a th:href="@{/datospersonales}"> Datos Personales</a>
                     </li>
                     <li class="list-group-item">
-                        <a th:href="@{'/colport/login'}" th:text="'login simon'" class="btn btn-primary btn-xs">
-                        </a>
+                        <a> Personas</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a> Cormobilidad</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a> Registro</a>
                     </li>
                 </ul>
+
             </div>
         </div>
     </div>

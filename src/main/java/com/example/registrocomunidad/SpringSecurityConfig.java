@@ -1,6 +1,7 @@
 package com.example.registrocomunidad;
 
 import com.example.registrocomunidad.loginutils.CustomAuthenticationProvider;
+import com.example.registrocomunidad.loginutils.LoginSuccessHandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,19 +24,24 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
         auth.authenticationProvider(customAuthenticationProvider);
     }
 
-    
+    @Autowired
+    private LoginSuccessHandler successHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         
-        http.authorizeRequests().antMatchers("/home", "/").permitAll()
+        http.authorizeRequests().antMatchers("/home", "/", "/ufps/login", "/colport/login", "/login**").permitAll()
+        .anyRequest().authenticated()
         .and()
         .formLogin()
+            .successHandler(successHandler)
             .loginPage("/login")
-            .defaultSuccessUrl("/datospersonales", true)
+            .defaultSuccessUrl("/index", true)
+            //.failureUrl("/home")
             .permitAll()
         .and()
-        .logout().permitAll();
+        .logout().logoutSuccessUrl("/")
+        .permitAll();
     }
 
 }

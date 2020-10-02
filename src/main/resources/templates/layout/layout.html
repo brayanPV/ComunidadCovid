@@ -9,10 +9,13 @@
 </head>
 
 <body>
-    <div class="container">
+    <header th:fragment="header" class="container py-4">
+        <div class="alert-success" th:if="${success != null}" th:text="${success}"> </div>
+        <div class="alert-danger" th:if="${error != null}" th:text="${error}"> </div>
+        <div class="alert-warning" th:if="${warning != null}" th:text="${warning}"> </div>
+        <div class="alert-info" th:if="${info != null}" th:text="${info}"> </div>
 
-
-    </div>
+    </header>
 
     <footer th:fragment="footer" class="container">
 

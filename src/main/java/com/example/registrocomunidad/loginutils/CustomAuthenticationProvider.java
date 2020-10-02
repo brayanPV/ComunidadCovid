@@ -51,14 +51,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         System.out.println("request testing= " + endpoint);
         String name = authentication.getName();
         System.out.println("EL NOMBRE ES: " + name);
-         
+
         String password = authentication.getCredentials().toString();
         System.out.println("LA CONTRASEÑA ES: " + password);
         if (endpoint != null) {
             if (endpoint.equalsIgnoreCase("ufps")) {
                 System.out.println("AQUI ES UFPS");
                 url = "http://siaweb.ufps.edu.co/prueba.php";
-                
+
             } else {
                 url = "http://siaweb.ufps.edu.co/unisimon.php";
             }
@@ -81,25 +81,27 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             try {
                 JSONObject obj = new JSONObject(response.getBody());
                 List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-                if (obj.optString("documento") != null) {
+                if (obj.optString("error") == "false") {
                     documento = obj.optString("documento");
                     String nombre = obj.optString("nombre");
                     Long tipo = obj.optLong("tipo");
                     Tipo t = tipoDao.findById(tipo);
                     Basico b = basicoDao.findByDocumento(documento);
-                    if(b==null){
-                        b= new Basico();
+                    if (b == null) {
+                        b = new Basico();
                         b.setDocumento(documento);
                         b.setNombre(nombre);
                         b.setTipo(t);
                         basicoDao.save(b);
                     }
+                } else {
+                    return null;
                 }
 
                 return new UsernamePasswordAuthenticationToken(documento, password, authorities);
 
             } catch (JSONException e) {
-               
+
                 e.printStackTrace();
                 Logger.getLogger(CustomAuthenticationProvider.class.getName()).log(Level.SEVERE, null, e);
             }
@@ -109,7 +111,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public boolean supports(Class<?> authentication) {
-        
+
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 
@@ -121,5 +123,4 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         this.url = url;
     }
 
-    
 }

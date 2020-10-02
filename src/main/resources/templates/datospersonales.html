@@ -5,30 +5,52 @@
 </head>
 
 <body>
+    <header th:replace="layout/layout :: header"></header>
     <div class="container py-4">
         <div class="card border-primary text-center">
             <div class="card-header" th:text="${titulo}"></div>
             <div class="card-body">
 
+                <form th:action="@{/formdatos}" th:object=${basico} method="post">
+                    <input type="hidden" th:field="*{id}" />
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Nombre</label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{nombre}" class="form-control" th:errorclass="'form-control alert-danger'" readonly>
+                            <small th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="from-text text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Documento</label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{documento}" class="form-control" th:errorclass="'form-control alert-danger'" readonly>
+                            <small th:if="${#fields.hasErrors('documento')}" th:errors="*{documento}" class="from-text text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Fecha Nacimiento</label>
+                        <div class="col-sm-6">
+                            <input type="date" th:field="*{fechaNacimiento}" class="form-control" th:errorclass="'form-control alert-danger'">
+                            <small th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}" class="from-text text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Telefono</label>
+                        <div class="col-sm-6">
+                            <input type="number" th:field="*{telefono}" class="form-control" th:errorclass="'form-control alert-danger'" />
+                            <small th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}" class="from-text text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="form-group">
 
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Documento</th>
-                            <th>Telefono</th>
-                            <th>Tipo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td th:text="${basico.nombre}"></td>
-                            <td th:text="${basico.documento}"></td>
-                            <td th:text="${basico.telefono}"></td>
-                            <td th:text="${basico.tipo.descripcion}"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                        <div class="col-sm-6">
+                            <input type="submit" th:value="Actualizar" class="btn btn-primary" />
+                        </div>
+                    </div>
+
+
+                </form>
+
 
             </div>
         </div>
