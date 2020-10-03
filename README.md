@@ -17,3 +17,40 @@ autenticación debe crear la persona en el sistema para que
 el usuario realice el registro de datos básicos del funcionario
 de la comunidad estudiantil. Siempre se debe realizar la
 autenticación contra el endpoint de la empresa.</p>
+<p>Method: POST
+Enlace: siaweb.ufps.edu.co/prueba.php
+Parametros de prueba: solo se utiliza el documento y la
+clave por POST.
+{
+"error":false,
+"documento":"10101010",
+"nombre":"Juan Camilo Gomez Perez",
+"tipo":2,
+"tipodescripcion":"Estudiante"
+}</p>
+<table>
+<thead>
+<tr>
+<th>Documento</th>
+<th>Clave</th>
+<th>Perfil</th>
+</tr> 
+</thead>
+<tbody>
+<tr>
+<td>1150001 </td>
+<td>1234 </td>
+<td>Estudiante </td>
+</tr>
+<tr>
+<td>00001 </td>
+<td>1234 </td>
+<td>Profesor </td>
+</tr>
+<tr>
+<td>90001 </td>
+<td>1234 </td>
+<td>Administrativo </td>
+</tr>
+</tbody>
+</table>
