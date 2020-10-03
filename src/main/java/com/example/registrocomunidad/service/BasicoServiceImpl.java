@@ -6,9 +6,11 @@ import com.example.registrocomunidad.dao.IBasicoDao;
 import com.example.registrocomunidad.entities.Basico;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Lazy
 @Service
 public class BasicoServiceImpl implements IBasicoService {
 
@@ -26,6 +28,12 @@ public class BasicoServiceImpl implements IBasicoService {
     public Basico findByDocumento(String documento) {
         // TODO Auto-generated method stub
         return basicoDao.findByDocumento(documento);
+    }
+
+    @Override
+    public Basico findById(Long id) {
+        // TODO Auto-generated method stub
+        return basicoDao.findById(id).orElse(null);
     }
     
 }

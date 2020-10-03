@@ -11,3 +11,12 @@ INSERT INTO tipo (id, descripcion, empresa) VALUES(7, 'Adminsitrativo', 2);
 
 INSERT INTO rol (id, descripcion) VALUES(1, 'Administrador');
 INSERT INTO rol (id, descripcion) VALUES(2, 'Usuario');
+
+INSERT INTO modalidad (id, descripcion) VALUES (1, 'Trabajo en casa');
+INSERT INTO modalidad (id, descripcion) VALUES (2, 'Presencial');
+
+INSERT INTO eps (id, descripcion) VALUES (1, 'Coomeva');
+INSERT INTO eps (id, descripcion) VALUES(2, 'Sanitas');
+INSERT INTO eps (id, descripcion) VALUES(3, 'Nueva EPS');
+INSERT INTO eps (id, descripcion) VALUES(5, 'Comparta');
+INSERT INTO eps (id, descripcion) VALUES(6, 'Comfacor');

@@ -1,5 +1,7 @@
 package com.example.registrocomunidad.service;
 
+import java.util.List;
+
 import com.example.registrocomunidad.dao.ITipoDao;
 import com.example.registrocomunidad.entities.Empresa;
 import com.example.registrocomunidad.entities.Tipo;
@@ -23,6 +25,13 @@ public class TipoServiceImpl implements ITipoService {
     @Override
     public Tipo findById(Long id) {
         return tipoDao.findById(id).orElse(null);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Tipo> findByEmpresa(Empresa empresa) {
+        // TODO Auto-generated method stub
+        return tipoDao.findByEmpresa(empresa);
     }
     
 }

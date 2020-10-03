@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http//thymeleaf.org">
+
+<head th:replace="layout/layout :: head">
+</head>
+
+<body>
+    <header th:replace="layout/layout :: header"></header>
+    <div class="container py-4">
+        <div class="card border-primary text-center">
+            <div class="card-header" th:text="${titulo}"></div>
+            <div class="card-body">
+
+                <form th:action="@{/formdatos}" th:object=${basico} method="post">
+                    <input type="hidden" th:field="*{id}" />
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Mayores de 60 años</label>
+                        <div class="custom-control custom-switch">
+                            <input th:field="*{masSesenta}" type="checkbox" class="custom-control-input" id="customSwitch1" checked>
+                            <label class="custom-control-label" for="customSwitch1"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Menores de 15 años</label>
+                        <div class="custom-control custom-switch">
+                            <input th:field="*{menosQuince}" type="checkbox" class="custom-control-input" id="customSwitch2" checked>
+                            <label class="custom-control-label" for="customSwitch2"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Del sector de la salud</label>
+                        <div class="custom-control custom-switch">
+                            <input th:field="*{salud}" type="checkbox" class="custom-control-input" id="customSwitch3" checked>
+                            <label class="custom-control-label" for="customSwitch3"></label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Persona de contacto</label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{contactoNombre}" class="form-control" th:errorclass="'form-control alert-danger'">
+                            <small th:if="${#fields.hasErrors('contactoNombre')}" th:errors="*{contactoNombre}" class="from-text text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Numero de contacto</label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{contactoTelefono}" class="form-control" th:errorclass="'form-control alert-danger'">
+                            <small th:if="${#fields.hasErrors('contactoTelefono')}" th:errors="*{contactoTelefono}" class="from-text text-danger"></small>
+                        </div>
+                    </div>
+
+            </div>
+            <div class="form-group">
+
+                <div class="col-sm-6">
+                    <input type="submit" th:value="Actualizar" class="btn btn-primary" />
+                </div>
+            </div>
+
+
+            </form>
+
+
+        </div>
+    </div>
+    </div>
+
+    <footer th:replace="layout/layout :: footer"></footer>
+</body>
+
+</html>

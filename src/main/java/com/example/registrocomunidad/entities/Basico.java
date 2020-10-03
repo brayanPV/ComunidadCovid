@@ -46,6 +46,28 @@ public class Basico implements Serializable{
     @JoinColumn(name="tipo")
     private Tipo tipo;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "modalidad")
+    private Modalidad modalidad;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="eps")
+    private Eps eps;
+
+    private Boolean genero;
+
+    private Boolean embarazada;
+
+    private Boolean masSesenta;
+
+    private Boolean menosQuince;
+
+    private Boolean salud;
+
+    private String contactoNombre;
+
+    private String contactoTelefono;
+
     public Long getId() {
         return id;
     }
@@ -92,6 +114,78 @@ public class Basico implements Serializable{
 
     public void setTipo(Tipo tipos) {
         this.tipo = tipos;
+    }
+
+    public Modalidad getModalidad() {
+        return modalidad;
+    }
+
+    public void setModalidad(Modalidad modalidad) {
+        this.modalidad = modalidad;
+    }
+
+    public Eps getEps() {
+        return eps;
+    }
+
+    public void setEps(Eps eps) {
+        this.eps = eps;
+    }
+
+    public Boolean getGenero() {
+        return genero;
+    }
+
+    public void setGenero(Boolean genero) {
+        this.genero = genero;
+    }
+
+    public Boolean getEmbarazada() {
+        return embarazada;
+    }
+
+    public void setEmbarazada(Boolean embarazada) {
+        this.embarazada = embarazada;
+    }
+
+    public Boolean getMasSesenta() {
+        return masSesenta;
+    }
+
+    public void setMasSesenta(Boolean masSesenta) {
+        this.masSesenta = masSesenta;
+    }
+
+    public Boolean getMenosQuince() {
+        return menosQuince;
+    }
+
+    public void setMenosQuince(Boolean menosQuince) {
+        this.menosQuince = menosQuince;
+    }
+
+    public Boolean getSalud() {
+        return salud;
+    }
+
+    public void setSalud(Boolean salud) {
+        this.salud = salud;
+    }
+
+    public String getContactoNombre() {
+        return contactoNombre;
+    }
+
+    public void setContactoNombre(String contactoNombre) {
+        this.contactoNombre = contactoNombre;
+    }
+
+    public String getContactoTelefono() {
+        return contactoTelefono;
+    }
+
+    public void setContactoTelefono(String contactoTelefono) {
+        this.contactoTelefono = contactoTelefono;
     }
 
     

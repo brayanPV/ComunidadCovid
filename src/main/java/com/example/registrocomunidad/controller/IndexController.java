@@ -1,20 +1,29 @@
 package com.example.registrocomunidad.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.validation.Valid;
 
 import com.example.registrocomunidad.entities.Basico;
+import com.example.registrocomunidad.entities.Eps;
+import com.example.registrocomunidad.entities.Modalidad;
+import com.example.registrocomunidad.entities.Tipo;
 import com.example.registrocomunidad.entities.Usuario;
 import com.example.registrocomunidad.loginutils.CustomAuthenticationProvider;
 import com.example.registrocomunidad.service.BasicoServiceImpl;
+import com.example.registrocomunidad.service.EpsServiceImpl;
+import com.example.registrocomunidad.service.ModalidadServiceImpl;
+import com.example.registrocomunidad.service.TipoServiceImpl;
 
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,11 +35,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @SessionAttributes("basico")
 public class IndexController {
 
+    @Lazy
     @Autowired
     private BasicoServiceImpl basicoImpl;
 
+    @Lazy
+    @Autowired
+    private TipoServiceImpl tipoImpl;
+    
+    @Lazy
     @Autowired
     private CustomAuthenticationProvider custom;
+    
+    @Lazy
+    @Autowired
+    private EpsServiceImpl epsImpl;
+    
+    @Lazy
+    @Autowired
+    private ModalidadServiceImpl modalidadImpl;
 
     @RequestMapping("/")
     public String root() {
@@ -49,11 +72,9 @@ public class IndexController {
         if (principal != null) {
             flash.addFlashAttribute("info", "Usted ya ha iniciado sesion en el sistema");
             System.out.println(principal.getName());
-            return "redirect:/index";
+            return "index";
         }
-        if (logout != null) {
-            model.addAttribute("success", "Ha cerrado sesión con exito");
-        }
+        
         model.addAttribute("titulo", "Iniciar sesion");
         model.addAttribute("universidad", "ufps");
         return "login";
@@ -67,18 +88,14 @@ public class IndexController {
             System.out.println(principal.getName());
             return "redirect:/index";
         }
-        if (logout != null) {
-            model.addAttribute("success", "Ha cerrado sesión con exito");
-            flash.addFlashAttribute("success", "Ha cerrado sesión con exito");
-            return "redirect:/home";
-        }
+        
         model.addAttribute("titulo", "Iniciar sesion");
         model.addAttribute("universidad", "simon");
         return "login";
     }
 
     @GetMapping(value = "/login")
-    public String loginErrororLogout(@RequestParam(value = "error", required = false) String error,
+    public String loginErrorOrLogout(@RequestParam(value = "error", required = false) String error,
             @RequestParam(value = "logout", required = false) String logout, Model model, Principal principal,
             RedirectAttributes flash) {
         if (error != null) {
@@ -99,18 +116,24 @@ public class IndexController {
         String documento = principal.getName();
         Basico basico = basicoImpl.findByDocumento(documento);
         model.addAttribute("titulo", "Bienvenido " + basico.getNombre());
-
+        model.addAttribute("basico", basico);
         return "index";
 
     }
 
-    @GetMapping(value = "/datospersonales")
-    public String crearDatosPersonales(Model model) {
+    @GetMapping(value = "/datospersonales/{id}")
+    public String crearDatosPersonales(@PathVariable(value = "id") Long id, Model model) {
         model.addAttribute("titulo", "Datos Personales");
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String documento = auth.getName();
-        Basico basico = basicoImpl.findByDocumento(documento);
+        
+        Basico basico = basicoImpl.findById(id);
+        List<Tipo> tipo = tipoImpl.findByEmpresa(basico.getTipo().getEmpresa());
+        List<Eps> eps = epsImpl.findAll();
+        List<Modalidad> modalidad =  modalidadImpl.findAll();
+        System.out.println("TAMAÑO AAAAA "+tipo.size());
+        model.addAttribute("tipos", tipo);
         model.addAttribute("basico", basico);
+        model.addAttribute("epss", eps);
+        model.addAttribute("modalidades", modalidad);
         return "datospersonales";
     }
 
@@ -124,6 +147,19 @@ public class IndexController {
             flash.addFlashAttribute("success", mensajeFlash);
             return "redirect:index";
         }
+        return "";
+    }
+
+    @GetMapping(value="/personas/{id}")
+    public String mostrarFormPersonas(@PathVariable(value = "id") Long id, Model model){
+        model.addAttribute("titulo", "Vive con personas de algunas de estas caracteristicas");
+        Basico basico = basicoImpl.findById(id);
+        model.addAttribute("basico", basico);
+        return "personas";
+    }
+
+    @GetMapping(value="/cormobilidad/{id}")
+    public String mostrarFormCormobilidad(){
         return "";
     }
 }

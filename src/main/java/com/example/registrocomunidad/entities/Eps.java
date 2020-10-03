@@ -9,32 +9,24 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tipo")
-public class Tipo implements Serializable{
+@Table
+public class Eps implements Serializable{
 
     /**
      *
      */
     private static final long serialVersionUID = 1L;
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String descripcion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="empresa")
-    private Empresa empresa;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="tipo")
+    @OneToMany(mappedBy = "eps", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Basico> basicos;
 
     public Long getId() {
@@ -51,14 +43,6 @@ public class Tipo implements Serializable{
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
     }
 
     public List<Basico> getBasicos() {

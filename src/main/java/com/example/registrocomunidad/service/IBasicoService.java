@@ -11,4 +11,6 @@ public interface IBasicoService {
     public void save(Basico basico);
 
     public Basico findByDocumento(String documento);
+
+    public Basico findById(Long id);
 }

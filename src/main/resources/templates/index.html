@@ -14,14 +14,14 @@
         </div>
         <div class="card border-primary text-center">
             <div class="card-header" th:text="${titulo}"></div>
-            <div class="card-body">
+            <div class="card-body" th:object=${basico}>
 
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <a th:href="@{/datospersonales}"> Datos Personales</a>
+                        <a th:href="@{'/datospersonales/' + ${basico.id}}"> Datos Personales</a>
                     </li>
                     <li class="list-group-item">
-                        <a> Personas</a>
+                        <a th:href="@{'/personas/' + ${basico.id}}"> Personas</a>
                     </li>
                     <li class="list-group-item">
                         <a> Cormobilidad</a>

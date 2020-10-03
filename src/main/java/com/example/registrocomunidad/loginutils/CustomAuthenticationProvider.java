@@ -9,10 +9,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.example.registrocomunidad.entities.Basico;
+import com.example.registrocomunidad.entities.Empresa;
 import com.example.registrocomunidad.entities.Tipo;
 import com.example.registrocomunidad.service.BasicoServiceImpl;
+import com.example.registrocomunidad.service.EmpresaServiceImpl;
 import com.example.registrocomunidad.service.TipoServiceImpl;
 
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -33,9 +36,11 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
+    @Lazy
     @Autowired
     BasicoServiceImpl basicoDao;
 
+    @Lazy
     @Autowired
     TipoServiceImpl tipoDao;
 
@@ -51,14 +56,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         System.out.println("request testing= " + endpoint);
         String name = authentication.getName();
         System.out.println("EL NOMBRE ES: " + name);
-
         String password = authentication.getCredentials().toString();
         System.out.println("LA CONTRASEÑA ES: " + password);
         if (endpoint != null) {
             if (endpoint.equalsIgnoreCase("ufps")) {
                 System.out.println("AQUI ES UFPS");
                 url = "http://siaweb.ufps.edu.co/prueba.php";
-
             } else {
                 url = "http://siaweb.ufps.edu.co/unisimon.php";
             }
