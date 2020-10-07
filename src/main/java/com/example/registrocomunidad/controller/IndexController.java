@@ -1,17 +1,20 @@
 package com.example.registrocomunidad.controller;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import com.example.registrocomunidad.entities.Basico;
+import com.example.registrocomunidad.entities.Cormobilidad;
 import com.example.registrocomunidad.entities.Eps;
 import com.example.registrocomunidad.entities.Modalidad;
 import com.example.registrocomunidad.entities.Tipo;
 import com.example.registrocomunidad.entities.Usuario;
 import com.example.registrocomunidad.loginutils.CustomAuthenticationProvider;
 import com.example.registrocomunidad.service.BasicoServiceImpl;
+import com.example.registrocomunidad.service.CormobilidadServiceImpl;
 import com.example.registrocomunidad.service.EpsServiceImpl;
 import com.example.registrocomunidad.service.ModalidadServiceImpl;
 import com.example.registrocomunidad.service.TipoServiceImpl;
@@ -42,18 +45,18 @@ public class IndexController {
     @Lazy
     @Autowired
     private TipoServiceImpl tipoImpl;
-    
-    @Lazy
-    @Autowired
-    private CustomAuthenticationProvider custom;
-    
+
     @Lazy
     @Autowired
     private EpsServiceImpl epsImpl;
-    
+
     @Lazy
     @Autowired
     private ModalidadServiceImpl modalidadImpl;
+
+    @Lazy
+    @Autowired
+    private CormobilidadServiceImpl cormobilidadImpl;
 
     @RequestMapping("/")
     public String root() {
@@ -74,7 +77,7 @@ public class IndexController {
             System.out.println(principal.getName());
             return "index";
         }
-        
+
         model.addAttribute("titulo", "Iniciar sesion");
         model.addAttribute("universidad", "ufps");
         return "login";
@@ -88,7 +91,7 @@ public class IndexController {
             System.out.println(principal.getName());
             return "redirect:/index";
         }
-        
+
         model.addAttribute("titulo", "Iniciar sesion");
         model.addAttribute("universidad", "simon");
         return "login";
@@ -124,12 +127,12 @@ public class IndexController {
     @GetMapping(value = "/datospersonales/{id}")
     public String crearDatosPersonales(@PathVariable(value = "id") Long id, Model model) {
         model.addAttribute("titulo", "Datos Personales");
-        
+
         Basico basico = basicoImpl.findById(id);
         List<Tipo> tipo = tipoImpl.findByEmpresa(basico.getTipo().getEmpresa());
         List<Eps> eps = epsImpl.findAll();
-        List<Modalidad> modalidad =  modalidadImpl.findAll();
-        System.out.println("TAMAÑO AAAAA "+tipo.size());
+        List<Modalidad> modalidad = modalidadImpl.findAll();
+        System.out.println("TAMAÑO AAAAA " + tipo.size());
         model.addAttribute("tipos", tipo);
         model.addAttribute("basico", basico);
         model.addAttribute("epss", eps);
@@ -142,7 +145,7 @@ public class IndexController {
             SessionStatus status) {
         if (basico.getId() != null) {
             basicoImpl.save(basico);
-            status.setComplete();
+            // status.setComplete();
             String mensajeFlash = "Datos actualizados con exito";
             flash.addFlashAttribute("success", mensajeFlash);
             return "redirect:index";
@@ -150,16 +153,37 @@ public class IndexController {
         return "";
     }
 
-    @GetMapping(value="/personas/{id}")
-    public String mostrarFormPersonas(@PathVariable(value = "id") Long id, Model model){
+    @GetMapping(value = "/personas/{id}")
+    public String mostrarFormPersonas(@PathVariable(value = "id") Long id, Model model) {
         model.addAttribute("titulo", "Vive con personas de algunas de estas caracteristicas");
         Basico basico = basicoImpl.findById(id);
         model.addAttribute("basico", basico);
         return "personas";
     }
 
-    @GetMapping(value="/cormobilidad/{id}")
-    public String mostrarFormCormobilidad(){
-        return "";
+    @GetMapping(value = "/cormobilidad/{id}")
+    public String mostrarFormCormobilidad(@PathVariable(value = "id") Long id, Model model) {
+        model.addAttribute("titulo", "Cormobilidades");
+        Cormobilidad c = cormobilidadImpl.findById(id);
+        if (c == null) {
+            c = new Cormobilidad();
+            c.setId(id);
+            cormobilidadImpl.save(c);
+        }
+        model.addAttribute("cormobilidad", c);
+        return "cormobilidades";
+    }
+
+    @RequestMapping(value = "/formcormobilidad", method = RequestMethod.POST)
+    public String actualizarCormobilidad(@Valid Cormobilidad cormobilidad, Model model, RedirectAttributes flash) {
+        if (cormobilidad != null) {
+            Date fecha = new Date();
+            cormobilidad.setFechareg(fecha);
+            cormobilidadImpl.save(cormobilidad);
+            flash.addFlashAttribute("success", "CORMOBILIDAD REGISTRADA");
+        } else {
+            flash.addFlashAttribute("error", "HA OCURRIDO UN ERROR");
+        }
+        return "redirect:index";
     }
 }

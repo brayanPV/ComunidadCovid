@@ -1,9 +1,9 @@
 package com.example.registrocomunidad.entities;
 
-
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -67,6 +69,19 @@ public class Basico implements Serializable{
     private String contactoNombre;
 
     private String contactoTelefono;
+
+    @Column(name="fecharegistro")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fechaRegistro;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "basico")
+    private Cormobilidad cormobilidad;
+
+    @PrePersist
+    public void prePersist(){
+         fechaRegistro = new Date();
+    }
 
     public Long getId() {
         return id;
@@ -186,6 +201,14 @@ public class Basico implements Serializable{
 
     public void setContactoTelefono(String contactoTelefono) {
         this.contactoTelefono = contactoTelefono;
+    }
+
+    public Date getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(Date fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
     }
 
     

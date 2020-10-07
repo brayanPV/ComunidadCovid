@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http//thymeleaf.org">
+
+<head th:replace="layout/layout :: head">
+</head>
+
+<body>
+    <header th:replace="layout/layout :: header"></header>
+    <div class="container py-4">
+        <div class="card border-primary text-center">
+            <div class="card-header" th:text="${titulo}"></div>
+            <div class="card-body">
+
+                <form th:action="@{/formcormobilidad}" th:object=${cormobilidad} method="post">
+                    <input type="hidden" th:field="*{id}" />
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Diabetes</label>
+                        <div class="custom-control custom-switch">
+                            <input th:field="*{diabetes}" type="checkbox" class="custom-control-input" id="customSwitch1" checked>
+                            <label class="custom-control-label" for="customSwitch1"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Enfermedad cardiovascular</label>
+                        <div class="custom-control custom-switch">
+                            <input th:field="*{cardio}" type="checkbox" class="custom-control-input" id="customSwitch2" checked>
+                            <label class="custom-control-label" for="customSwitch2"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Accidente de cerebro vascular</label>
+                        <div class="custom-control custom-switch">
+                            <input th:field="*{cerebro}" type="checkbox" class="custom-control-input" id="customSwitch3" checked>
+                            <label class="custom-control-label" for="customSwitch3"></label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">VIH</label>
+                        <div class="custom-control custom-switch">
+                            <input th:field="*{vih}" type="checkbox" class="custom-control-input" id="customSwitch4" checked>
+                            <label class="custom-control-label" for="customSwitch4"></label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Cancer</label>
+                        <div class="custom-control custom-switch">
+                            <input th:field="*{cancer}" type="checkbox" class="custom-control-input" id="customSwitch5" checked>
+                            <label class="custom-control-label" for="customSwitch5"></label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Uso de coricoides o inmunosu</label>
+                        <div class="custom-control custom-switch">
+                            <input th:field="*{corticoides}" type="checkbox" class="custom-control-input" id="customSwitch6" checked>
+                            <label class="custom-control-label" for="customSwitch6"></label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Enfermedad Obstructiva cronica</label>
+                        <div class="custom-control custom-switch">
+                            <input th:field="*{epoc}" type="checkbox" class="custom-control-input" id="customSwitch7" checked>
+                            <label class="custom-control-label" for="customSwitch7"></label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Mal nutricion</label>
+                        <div class="custom-control custom-switch">
+                            <input th:field="*{nutricion}" type="checkbox" class="custom-control-input" id="customSwitch8" checked>
+                            <label class="custom-control-label" for="customSwitch8"></label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Fumador</label>
+                        <div class="custom-control custom-switch">
+                            <input th:field="*{fumador}" type="checkbox" class="custom-control-input" id="customSwitch9" checked>
+                            <label class="custom-control-label" for="customSwitch9"></label>
+                        </div>
+                    </div>
+            </div>
+            <div class="form-group">
+
+                <div class="col-sm-6">
+                    <input type="submit" th:value="Actualizar" class="btn btn-primary" />
+                </div>
+            </div>
+
+
+            </form>
+
+
+        </div>
+    </div>
+    </div>
+
+    <footer th:replace="layout/layout :: footer"></footer>
+</body>
+
+</html>
